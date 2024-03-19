@@ -24,6 +24,7 @@ jobs:
           cd /home/ubuntu
           sudo apt-get install nginx
           sudo service nginx stop
+          ls 
           scp -r hello.py ubuntu@18.222.145.229:/home/ubuntu
 
           # Run Python script
