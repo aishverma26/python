@@ -22,7 +22,7 @@ jobs:
       uses: garygrossgarten/github-action-scp@release
       with:
         local: hello.py
-        remote: home/ubuntu
+        remote: hello.py
         host: 3.137.145.219
         port: 22
         username: ubuntu
