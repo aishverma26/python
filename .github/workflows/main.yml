@@ -1,10 +1,10 @@
 name: Deploy to EC2
 
-#run code on new bush to main branch
+# Run code on push to main branch
 on:
   push:
     branches:
-      - main  # Adjust branch name as needed
+      - main
 
 jobs:
   deploy:
@@ -14,6 +14,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    # Copy code to server using SCP
+    - name: Copy code to EC2
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_auth_sock
+      run: |
+        eval "$(ssh-agent -s)"
+        ssh-add - <<< "${{ secrets.ssh_key }}"
+        cp -r $GITHUB_WORKSPACE/* /tmp/workspace
+        scp -r -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -i <(echo "${{ secrets.ssh_key }}") /tmp/workspace/* ubuntu@18.222.145.229:/home/ubuntu
+
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
       with:
@@ -22,13 +32,7 @@ jobs:
         key: ${{ secrets.ssh_key }}  # SSH private key stored as secret
         script: |
           cd /home/ubuntu
+          ls
           sudo apt-get install nginx
           sudo service nginx stop
-          ls 
-          #scp -r hello.py ubuntu@18.222.145.229:/home/ubuntu
-
-          # Run Python script
-          #cd /home/ubuntu
-          #python3 hello.py
-
-          mKdir ayush
+          # Run any additional deployment steps here
