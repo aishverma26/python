@@ -21,7 +21,7 @@ jobs:
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
       with:
-        host: 18.188.141.252 # Add your EC2 instance public IP/domain
+        host: 18.219.115.17 # Add your EC2 instance public IP/domain
         username: ubuntu  # EC2 username
         key: ${{ secrets.ssh_key }}  # SSH private key stored as secret
         script: |
@@ -34,7 +34,7 @@ jobs:
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
       with:
-        host: 18.218.15.55  # Add your EC2 instance public IP/domain
+        host: 3.17.70.239  # Add your EC2 instance public IP/domain
         username: ubuntu  # EC2 username
         key: ${{ secrets.ssh_key }}  # SSH private key stored as secret
         script: |
