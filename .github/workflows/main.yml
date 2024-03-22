@@ -14,14 +14,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # Copy code to server using SCP
-    - name: Copy code to EC2
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_auth_sock
-      run: |
-        eval "$(ssh-agent -s)"
-        ssh-add - <<< "${{ secrets.ssh_key }}"
-        scp -r -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -i <(echo "${{ secrets.ssh_key }}") . ubuntu@18.222.145.229:/home/ubuntu
+    # List files in the current directory
+    - name: List files in current directory
+      run: ls -la
+
+    - name: Copy folder content recursively to remote
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        local: python
+        remote: home/ubuntu
+        host: 18.222.145.229
+        port: 22
+        username: ubuntu
+        privateKey: ${{secrets.ssh_key}}
 
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
