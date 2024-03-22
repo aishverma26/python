@@ -18,25 +18,31 @@ jobs:
     - name: List files in current directory
       run: ls -la
 
-    - name: Copy folder content recursively to remote
-      uses: garygrossgarten/github-action-scp@release
-      with:
-        local: hello.py
-        remote: hello.py
-        host: 3.137.145.219
-        port: 22
-        username: ubuntu
-        privateKey: ${{secrets.ssh_key}}
-
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
       with:
-        host: 3.137.145.219  # Add your EC2 instance public IP/domain
+        host: 18.188.141.252 # Add your EC2 instance public IP/domain
         username: ubuntu  # EC2 username
         key: ${{ secrets.ssh_key }}  # SSH private key stored as secret
         script: |
           cd /home/ubuntu
-          ls
+          sudo apt-get update
           sudo apt-get install nginx
-          sudo service nginx stop
+          sudo service nginx start
           # Run any additional deployment steps here
+
+    - name: SSH into EC2 and deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: 18.218.15.55  # Add your EC2 instance public IP/domain
+        username: ubuntu  # EC2 username
+        key: ${{ secrets.ssh_key }}  # SSH private key stored as secret
+        script: |
+          cd /home/ubuntu
+          sudo apt-get update
+          sudo apt-get install nginx
+          sudo service nginx start
+          # Run any additional deployment steps here
+
+
+        
