@@ -21,7 +21,7 @@ jobs:
     - name: Copy folder content recursively to remote
       uses: garygrossgarten/github-action-scp@release
       with:
-        local: python
+        local: hello.py
         remote: home/ubuntu
         host: 18.222.145.229
         port: 22
