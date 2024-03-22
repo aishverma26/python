@@ -23,7 +23,7 @@ jobs:
       with:
         local: hello.py
         remote: home/ubuntu
-        host: 18.222.145.229
+        host: 3.137.145.219
         port: 22
         username: ubuntu
         privateKey: ${{secrets.ssh_key}}
@@ -31,7 +31,7 @@ jobs:
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
       with:
-        host: 18.222.145.229  # Add your EC2 instance public IP/domain
+        host: 3.137.145.219  # Add your EC2 instance public IP/domain
         username: ubuntu  # EC2 username
         key: ${{ secrets.ssh_key }}  # SSH private key stored as secret
         script: |
