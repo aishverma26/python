@@ -22,7 +22,7 @@ jobs:
         eval "$(ssh-agent -s)"
         ssh-add - <<< "${{ secrets.ssh_key }}"
         cp -r $GITHUB_WORKSPACE/* /tmp/workspace
-        scp -r -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -i <(echo "${{ secrets.ssh_key }}") /tmp/workspace/* ubuntu@18.222.145.229:/home/ubuntu
+        scp -r -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -i <(echo "${{ secrets.ssh_key }}") $GITHUB_WORKSPACE/* ubuntu@18.222.145.229:/home/ubuntu
 
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
